@@ -8,9 +8,22 @@ public partial class Terrain : TileMap
 	[Export]
 	int NTypes = 6;
 
-	public Generator Generator = new RandomGenerator();
+	public Generator Generator = new PerlinGraph();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
+	{
+		if (Dimensions.X < 1)
+		{
+			Dimensions.X = (int)GetViewportRect().Size.X / TileSet.TileSize.X + 1;
+		}
+		if (Dimensions.Y < 1) 
+		{
+			Dimensions.Y = (int)GetViewportRect().Size.Y / TileSet.TileSize.Y + 1;
+		}
+		GenerateMap();
+	}
+
+	public void GenerateMap()
 	{
 		Generator.Generate(NTypes, Dimensions);
 		for (int i = 0; i < Dimensions.X; i++)
@@ -28,11 +41,5 @@ public partial class Terrain : TileMap
 				);
 			}
 		}
-
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 	}
 }
