@@ -40,9 +40,9 @@ public class PerlinGraph : Generator, IGenerator
 
   private void CreateEdges()
   {
-    for (int cellx = 2; cellx < Dimensions.X-2; cellx++)
+    for (int cellx = 0; cellx < Dimensions.X; cellx++)
     {
-      for (int celly = 2; celly < Dimensions.Y-2; celly++)
+      for (int celly = 0; celly < Dimensions.Y; celly++)
       {
         var sum = 0f;
         for (int kernelx = 0; kernelx < 3; kernelx++)
