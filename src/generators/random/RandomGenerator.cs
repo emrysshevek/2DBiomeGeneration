@@ -11,7 +11,6 @@ public class RandomGenerator : Generator, IGenerator
 
     public override int Sample(Vector2I coordinates)
     {
-      var rng = new RandomNumberGenerator();
-      return rng.RandiRange(0, NTypes-1);
+      return RNG.RandiRange(0, NTypes-1);
     }
 }

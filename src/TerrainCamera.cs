@@ -28,10 +28,8 @@ public partial class TerrainCamera : Camera2D
       base._Input(@event);
 			if (@event is InputEventMouseButton eventMouseButton)
 		{
-			GD.Print("EventMouseButton");
 			if (eventMouseButton.IsPressed()) 
 			{ 
-				GD.Print("Mouse is clicked");
 				MouseIsPressed = true;
 				MousePosition = eventMouseButton.Position; 
 			}
@@ -39,10 +37,8 @@ public partial class TerrainCamera : Camera2D
 		} 
     else if (@event is InputEventMouseMotion eventMouseMotion)
 		{
-			GD.Print("EventMouseMotion");
 			if (MouseIsPressed)
 			{
-				GD.Print("Mouse is clicked and dragged");
 				var newPos = eventMouseMotion.Position;
 				Position += (MousePosition - newPos) / Zoom;
 				MousePosition = newPos;

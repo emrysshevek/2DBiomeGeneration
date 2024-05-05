@@ -18,6 +18,7 @@ public partial class Main : Node2D
 
 	public void _OnRegenerateButtonPressed()
 	{
+		GD.Print("Regenerating map");
 		TerrainMap.GenerateMap();
 	}
 }

@@ -1,23 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxcwoa2btqtes"]
+[gd_scene load_steps=6 format=3 uid="uid://dxcwoa2btqtes"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_447ym"]
 [ext_resource type="TileSet" uid="uid://t45oc4feqmuj" path="res://color_tileset.tres" id="1_dguff"]
 [ext_resource type="Script" path="res://Terrain.cs" id="2_vb46d"]
 [ext_resource type="Script" path="res://TerrainCamera.cs" id="4_j3t0h"]
+[ext_resource type="PackedScene" uid="uid://b171wkkthd8h5" path="res://controllers/perlin_graph_controller.tscn" id="5_fd0iq"]
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("Camera", "TerrainMap")]
 script = ExtResource("1_447ym")
 Camera = NodePath("TerrainCamera")
 TerrainMap = NodePath("TerrainMap")
 
-[node name="TerrainMap" type="TileMap" parent="." node_paths=PackedStringArray("Camera")]
+[node name="TerrainMap" type="TileMap" parent="." node_paths=PackedStringArray("Camera", "Controller")]
 tile_set = ExtResource("1_dguff")
 format = 2
 script = ExtResource("2_vb46d")
 Dimensions = Vector2i(-1, -1)
 Camera = NodePath("../TerrainCamera")
-
-[node name="Controllers" type="Node2D" parent="."]
+Controller = NodePath("../UI/Control/MarginContainer/VBoxContainer/BaseController")
 
 [node name="TerrainCamera" type="Camera2D" parent="." node_paths=PackedStringArray("TerrainMap")]
 script = ExtResource("4_j3t0h")
@@ -51,13 +51,32 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 alignment = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/MarginContainer/VBoxContainer"]
+[node name="BaseController" parent="UI/Control/MarginContainer/VBoxContainer" instance=ExtResource("5_fd0iq")]
 layout_mode = 2
-alignment = 1
+size_flags_horizontal = 1
+size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="UI/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="UI/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Button" type="Button" parent="UI/Control/MarginContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -73.0
+offset_top = -43.0
+offset_right = 73.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 25
 text = "Regenerate"
 
-[connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_OnRegenerateButtonPressed"]
+[connection signal="Resample" from="UI/Control/MarginContainer/VBoxContainer/BaseController" to="TerrainMap" method="SampleMap"]
+[connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer/Control/Button" to="." method="_OnRegenerateButtonPressed"]

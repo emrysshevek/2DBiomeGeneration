@@ -9,14 +9,15 @@ public partial class Terrain : TileMap
 	int NTypes = 6;
 	[Export]
 	public TerrainCamera Camera;
+	[Export]
+	public BaseController Controller;
 	private Vector2I _dimensions;
 
-	public Generator Generator = new PerlinGraph();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_dimensions = Dimensions;
-		GenerateMap();
+		Controller.Resample += SampleMap;
 	}
 
 	public void SetDimensions()
@@ -36,13 +37,19 @@ public partial class Terrain : TileMap
 	public void GenerateMap()
 	{
 		SetDimensions();
-		Generator.Generate(NTypes, Dimensions);
+		Controller.Generate(NTypes, Dimensions);
+		SampleMap();
+		Camera.FitToScreen();
+	}
+
+	public void SampleMap()
+	{
 		for (int i = 0; i < Dimensions.X; i++)
 		{
 			for (int j = 0; j < Dimensions.Y; j++)
 			{
 				var coordinates = new Vector2I(i, j);
-				int type = Generator.Sample(coordinates);
+				int type = Controller.Sample(coordinates);
 				SetCell
 				(
 					layer: 0, 
@@ -52,6 +59,6 @@ public partial class Terrain : TileMap
 				);
 			}
 		}
-		Camera.FitToScreen();
 	}
+
 }

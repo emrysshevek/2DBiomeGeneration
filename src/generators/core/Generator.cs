@@ -2,6 +2,7 @@ using Godot;
 
 public abstract class Generator : IGenerator
 {
+  protected static Generator Instance = null;
   public int NTypes { get; set; }
   public Vector2I Dimensions { get; set; }
   public RandomNumberGenerator RNG = new();
@@ -14,4 +15,10 @@ public abstract class Generator : IGenerator
   }
 
   public abstract int Sample(Vector2I coordinates);
+
+  public virtual void SetSampler(string state)
+  {
+    ;;
+  }
+
 }
