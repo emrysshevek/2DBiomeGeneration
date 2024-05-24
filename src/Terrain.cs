@@ -18,6 +18,8 @@ public partial class Terrain : TileMap
 	{
 		_dimensions = Dimensions;
 		Controller.Resample += SampleMap;
+
+		CallDeferred("GenerateMap");
 	}
 
 	public void SetDimensions()

@@ -51,10 +51,11 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 alignment = 2
 
-[node name="BaseController" parent="UI/Control/MarginContainer/VBoxContainer" instance=ExtResource("5_fd0iq")]
+[node name="BaseController" parent="UI/Control/MarginContainer/VBoxContainer" node_paths=PackedStringArray("Map") instance=ExtResource("5_fd0iq")]
 layout_mode = 2
-size_flags_horizontal = 1
-size_flags_vertical = 3
+size_flags_horizontal = 8
+size_flags_vertical = 6
+Map = NodePath("../../../../../TerrainMap")
 
 [node name="Control" type="Control" parent="UI/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2

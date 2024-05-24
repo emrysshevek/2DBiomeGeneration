@@ -4,15 +4,25 @@ using System;
 public partial class PerlinGraphController : BaseController
 {
 	private PerlinGraph PG = new PerlinGraph();
+	private bool ShowGraph = false;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		generator = new PerlinGraph();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _Draw()
 	{
+		base._Draw();
+		if (ShowGraph) 
+		{
+			foreach(var bnode in ((PerlinGraph)generator).UniqueBNodes)
+			{
+				var pos = Map.MapToLocal(bnode.Center);
+				GD.Print($"Node position: {pos}");
+				DrawCircle(bnode.Center, 10, Color.Color8(0,0,0));
+			}
+		}
 	}
 
 	public void _OnNoiseButtonPressed()
@@ -37,5 +47,11 @@ public partial class PerlinGraphController : BaseController
 	{
 		generator.SetSampler("biomes");
 		EmitSignal(SignalName.Resample);
+	}
+
+	public void _OnGraphButtonPressed()
+	{
+		ShowGraph = !ShowGraph;
+		QueueRedraw();
 	}
 }
